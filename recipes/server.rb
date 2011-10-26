@@ -71,9 +71,13 @@ end
 service "mysql" do
   service_name node['mysql']['service_name']
   if (platform?("ubuntu") && node.platform_version.to_f >= 10.04)
-    restart_command "restart mysql"
-    stop_command "stop mysql"
-    start_command "start mysql"
+    # thanks to: http://tickets.opscode.com/browse/CHEF-1424
+    provider Chef::Provider::Service::Upstart
+
+    # always best to do a clean restart:
+    # the normal 'restart mysql' command will not re-read /etc/init/mysql.conf
+    # also, restart won't start
+    restart_command "stop mysql && start mysql"
   end
   supports :status => true, :restart => true, :reload => true
   action :nothing
