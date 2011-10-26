@@ -97,3 +97,6 @@ default['mysql']['tunable']['expire_logs_days']     = 10
 default['mysql']['tunable']['max_binlog_size']      = "100M"
 
 default['mysql']['tunable']['innodb_buffer_pool_size']  = "256M"
+
+default['mysql']['server_character_set']  = "utf8"
+default['mysql']['server_collation']      = "utf8_general_ci"
