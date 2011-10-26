@@ -80,6 +80,20 @@ template "#{node['mysql']['conf_dir']}/my.cnf" do
   notifies :restart, resources(:service => "mysql"), :immediately
 end
 
+if platform?(%w{debian ubuntu})
+  template "#{node['mysql']['conf_dir']}/conf.d/mysqld_default_charset.cnf" do
+    source "mysqld_default_charset.cnf.erb"
+    owner "root"
+    group "root"
+    mode "0644"
+    variables(
+      :character_set  => node['mysql']['server_character_set'],
+      :collation      => node['mysql']['server_collation']
+    )
+    notifies :restart, resources(:service => "mysql"), :immediately
+  end
+end
+
 unless Chef::Config[:solo]
   ruby_block "save node data" do
     block do
