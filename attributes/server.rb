@@ -40,6 +40,8 @@ if attribute?('ec2')
 end
 
 default['mysql']['allow_remote_root']               = false
+default['mysql']['enable_repl_ssl']                 = false
+default['mysql']['repl_user_ssl_require_issuer']    = ""
 default['mysql']['tunable']['back_log']             = "128"
 default['mysql']['tunable']['key_buffer']           = "256M"
 default['mysql']['tunable']['max_allowed_packet']   = "16M"
